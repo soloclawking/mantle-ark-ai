@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mantle Ark AI — Bring Everything In. Protect It Forever.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <!-- Animated Background -->
+  <canvas id="particleCanvas"></canvas>
+  <div class="bg-grid"></div>
+  <div class="bg-glow bg-glow-1"></div>
+  <div class="bg-glow bg-glow-2"></div>
+  <div class="bg-glow bg-glow-3"></div>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header-left">
+      <div class="logo" onclick="showSection('hero')">
+        <div class="logo-icon">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <rect width="32" height="32" rx="8" fill="url(#logoGrad)"/>
+            <path d="M16 6L22 12L16 18L10 12L16 6Z" fill="white" opacity="0.9"/>
+            <path d="M16 14L22 20L16 26L10 20L16 14Z" fill="white" opacity="0.5"/>
+            <defs><linearGradient id="logoGrad" x1="0" y1="0" x2="32" y2="32"><stop stop-color="#00d4aa"/><stop offset="1" stop-color="#7b61ff"/></linearGradient></defs>
+          </svg>
+        </div>
+        <div class="logo-text">
+          <span class="logo-name">Mantle Ark</span>
+          <span class="logo-ai">AI</span>
+        </div>
+      </div>
+    </div>
+
+    <nav class="header-nav" id="mainNav">
+      <button class="nav-btn" onclick="showSection('scanner')" data-section="scanner">
+        <span class="nav-icon">&#9906;</span> Scanner
+      </button>
+      <button class="nav-btn" onclick="showSection('dashboard')" data-section="dashboard">
+        <span class="nav-icon">&#9632;</span> Dashboard
+      </button>
+      <button class="nav-btn" onclick="showSection('migration')" data-section="migration">
+        <span class="nav-icon">&#10132;</span> Migration
+      </button>
+      <button class="nav-btn" onclick="showSection('vault')" data-section="vault">
+        <span class="nav-icon">&#9878;</span> Ark Vault
+      </button>
+      <button class="nav-btn" onclick="showSection('chat')" data-section="chat">
+        <span class="nav-icon">&#9883;</span> AI Chat
+      </button>
+    </nav>
+
+    <div class="header-right">
+      <button class="btn-wallet" id="walletBtn" onclick="connectWallet()">
+        <span class="wallet-dot"></span>
+        Connect Wallet
+      </button>
+      <div class="wallet-info" id="walletInfo" style="display:none">
+        <span class="wallet-dot connected"></span>
+        <span id="walletAddr">0x...</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main">
+
+    <!-- ==================== HERO SECTION ==================== -->
+    <section class="section active" id="section-hero">
+      <div class="hero">
+        <div class="hero-badge">
+          <span class="hero-badge-dot"></span>
+          Powered by AI on Mantle Network
+        </div>
+        <h1 class="hero-title">
+          <span class="hero-line">Bring Everything In.</span>
+          <span class="hero-line gradient">Protect It Forever.</span>
+        </h1>
+        <p class="hero-desc">
+          Scan your assets across every chain — EVM, Solana, Sui, Aptos, and more.
+          AI shows you why Mantle is the best home for your portfolio.
+          Then protect it with an on-chain inheritance vault for your loved ones.
+        </p>
+        <div class="hero-actions">
+          <button class="btn-hero-primary" onclick="showSection('scanner')">
+            <span>&#9906;</span> Scan My Assets
+          </button>
+          <button class="btn-hero-secondary" onclick="connectWallet()">
+            <span>&#128279;</span> Connect Wallet
+          </button>
+        </div>
+
+        <div class="hero-features">
+          <div class="hero-feature-card" onclick="showSection('scanner')">
+            <div class="hf-icon hf-scan">&#9906;</div>
+            <div class="hf-step">STEP 1</div>
+            <h3>Universal Scan</h3>
+            <p>Paste any RPC + wallet address. AI auto-detects the chain and scans all your assets.</p>
+          </div>
+          <div class="hero-feature-arrow">&#10132;</div>
+          <div class="hero-feature-card" onclick="showSection('migration')">
+            <div class="hf-icon hf-migrate">&#10132;</div>
+            <div class="hf-step">STEP 2</div>
+            <h3>Smart Migration</h3>
+            <p>AI compares gas, yield, and risk. Get a personalized plan to consolidate on Mantle.</p>
+          </div>
+          <div class="hero-feature-arrow">&#10132;</div>
+          <div class="hero-feature-card" onclick="showSection('vault')">
+            <div class="hf-icon hf-vault">&#9878;</div>
+            <div class="hf-step">STEP 3</div>
+            <h3>Ark Vault</h3>
+            <p>Set up a dead man's switch. If you go silent, your assets reach your family — automatically.</p>
+          </div>
+        </div>
+
+        <div class="hero-chains">
+          <span class="hero-chains-label">Supported Chains:</span>
+          <div class="chain-tags">
+            <span class="chain-tag mantle">Mantle</span>
+            <span class="chain-tag">Ethereum</span>
+            <span class="chain-tag">Arbitrum</span>
+            <span class="chain-tag">Optimism</span>
+            <span class="chain-tag">Base</span>
+            <span class="chain-tag">Polygon</span>
+            <span class="chain-tag">BNB</span>
+            <span class="chain-tag">Solana</span>
+            <span class="chain-tag">Sui</span>
+            <span class="chain-tag">Aptos</span>
+            <span class="chain-tag">+Any RPC</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SCANNER SECTION ==================== -->
+    <section class="section" id="section-scanner">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">Universal Chain Scanner</h2>
+          <p class="section-desc">Add any chain by pasting its RPC endpoint. AI auto-detects the chain type and scans your assets.</p>
+        </div>
+      </div>
+
+      <div class="scanner-layout">
+        <!-- Add Chain Form -->
+        <div class="scanner-form card">
+          <div class="card-header">
+            <span class="card-label">&#9906; Add Chain</span>
+          </div>
+          <div class="card-body">
+            <div class="form-group">
+              <label>RPC Endpoint URL</label>
+              <input type="text" id="scanRpc" class="input" placeholder="https://rpc.mantle.xyz" />
+              <div class="input-hint">Paste any RPC URL — EVM, Solana, Sui, or Aptos</div>
+            </div>
+            <div class="form-group">
+              <label>Wallet Address</label>
+              <input type="text" id="scanAddress" class="input" placeholder="0x... or base58 or 0x (Sui/Aptos)" />
+            </div>
+            <div class="quick-rpcs">
+              <span class="quick-rpcs-label">Quick Add:</span>
+              <button class="quick-rpc" onclick="setQuickRpc('https://rpc.mantle.xyz', 'Mantle')">Mantle</button>
+              <button class="quick-rpc" onclick="setQuickRpc('https://eth.llamarpc.com', 'Ethereum')">Ethereum</button>
+              <button class="quick-rpc" onclick="setQuickRpc('https://arb1.arbitrum.io/rpc', 'Arbitrum')">Arbitrum</button>
+              <button class="quick-rpc" onclick="setQuickRpc('https://mainnet.optimism.io', 'Optimism')">Optimism</button>
+              <button class="quick-rpc" onclick="setQuickRpc('https://mainnet.base.org', 'Base')">Base</button>
+              <button class="quick-rpc" onclick="setQuickRpc('https://bsc-dataseed.binance.org', 'BNB')">BNB</button>
+              <button class="quick-rpc" onclick="setQuickRpc('https://api.mainnet-beta.solana.com', 'Solana')">Solana</button>
+              <button class="quick-rpc" onclick="setQuickRpc('https://fullnode.mainnet.sui.io:443', 'Sui')">Sui</button>
+              <button class="quick-rpc" onclick="setQuickRpc('https://fullnode.mainnet.aptoslabs.com', 'Aptos')">Aptos</button>
+            </div>
+            <button class="btn-primary" onclick="scanChain()" id="scanBtn">
+              <span>&#9906;</span> Scan Chain
+            </button>
+          </div>
+        </div>
+
+        <!-- Scanned Results -->
+        <div class="scanner-results">
+          <div class="card-header">
+            <span class="card-label">&#9881; Scanned Chains</span>
+            <span class="chain-count" id="chainCount">0 chains</span>
+          </div>
+          <div id="scannedChains" class="scanned-chains">
+            <div class="empty-state">
+              <div class="empty-icon">&#127758;</div>
+              <p>No chains scanned yet</p>
+              <span>Add a chain using the form on the left</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== DASHBOARD SECTION ==================== -->
+    <section class="section" id="section-dashboard">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">Portfolio Dashboard</h2>
+          <p class="section-desc">Your complete cross-chain portfolio overview. Connect wallet to auto-scan EVM chains.</p>
+        </div>
+        <div style="display:flex;gap:8px">
+          <button class="btn-outline" onclick="if(walletState.address){autoScanAllChains(walletState.address)}else{connectWallet()}">
+            <span>&#8635;</span> Rescan
+          </button>
+          <button class="btn-outline" onclick="showSection('scanner')">
+            <span>+</span> Add Chain
+          </button>
+        </div>
+      </div>
+
+      <div class="dashboard-grid">
+        <!-- Stats Row -->
+        <div class="stats-row">
+          <div class="stat-card">
+            <div class="stat-label">Total Portfolio Value</div>
+            <div class="stat-value" id="totalValue">$0.00</div>
+            <div class="stat-sub" id="totalChains">Across 0 chains</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Total Transactions</div>
+            <div class="stat-value" id="totalTxCount">0</div>
+            <div class="stat-sub">Across all chains</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Estimated Savings on Mantle</div>
+            <div class="stat-value accent" id="estSavings">$0/yr</div>
+            <div class="stat-sub">Gas + yield optimization</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Ark Vault Status</div>
+            <div class="stat-value" id="vaultStatus">Not Configured</div>
+            <div class="stat-sub"><a href="#" onclick="showSection('vault')">Set up protection &#10132;</a></div>
+          </div>
+        </div>
+
+        <!-- Chart + Chain List -->
+        <div class="dashboard-main">
+          <div class="chart-card card">
+            <div class="card-header">
+              <span class="card-label">Asset Distribution</span>
+            </div>
+            <div class="chart-container">
+              <canvas id="portfolioChart"></canvas>
+              <div class="chart-empty" id="chartEmpty">
+                <p>Scan chains to see your portfolio distribution</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="chain-list-card card">
+            <div class="card-header">
+              <span class="card-label">Chain Breakdown</span>
+            </div>
+            <div class="chain-list" id="chainList">
+              <div class="empty-state small">
+                <p>No data yet</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Migration CTA -->
+        <div class="migration-cta card" id="migrationCta" style="display:none">
+          <div class="cta-content">
+            <div class="cta-icon">&#10132;</div>
+            <div>
+              <h3>Ready to Migrate?</h3>
+              <p id="ctaText">AI has analyzed your portfolio. You could save an estimated $X/year by consolidating on Mantle.</p>
+            </div>
+          </div>
+          <button class="btn-primary" onclick="showSection('migration')">
+            View Migration Plan <span>&#10132;</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== MIGRATION SECTION ==================== -->
+    <section class="section" id="section-migration">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">AI Migration Advisor</h2>
+          <p class="section-desc">AI analyzes your portfolio and creates a personalized migration plan to Mantle.</p>
+        </div>
+      </div>
+
+      <div class="migration-layout">
+        <div class="migration-controls card">
+          <div class="card-header">
+            <span class="card-label">&#9881; Migration Settings</span>
+          </div>
+          <div class="card-body">
+            <div class="form-group">
+              <label>Migration Priority</label>
+              <select id="migPriority" class="input">
+                <option value="cost">Lowest Cost First</option>
+                <option value="yield">Highest Yield Gain First</option>
+                <option value="risk">Lowest Risk First</option>
+                <option value="all">Migrate Everything</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Risk Tolerance</label>
+              <select id="migRisk" class="input">
+                <option value="conservative">Conservative</option>
+                <option value="moderate" selected>Moderate</option>
+                <option value="aggressive">Aggressive</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>After Migration Strategy</label>
+              <select id="migStrategy" class="input">
+                <option value="hold">Hold on Mantle</option>
+                <option value="stake">Stake mETH (Liquid Staking)</option>
+                <option value="lp">Provide Liquidity (DEX)</option>
+                <option value="lend">Lend on Lendle</option>
+                <option value="mix">AI Recommended Mix</option>
+              </select>
+            </div>
+            <button class="btn-primary" onclick="generateMigrationPlan()" id="migBtn">
+              <span>&#9883;</span> Generate AI Migration Plan
+            </button>
+          </div>
+
+          <!-- Comparison Table -->
+          <div class="comparison-section" id="comparisonSection" style="display:none">
+            <div class="card-header">
+              <span class="card-label">Current vs Mantle</span>
+            </div>
+            <div id="comparisonTable" class="comparison-table"></div>
+          </div>
+        </div>
+
+        <div class="migration-report card">
+          <div class="card-header">
+            <span class="card-label">&#128196; AI Migration Report</span>
+          </div>
+          <div class="card-body report-body" id="migrationReport">
+            <div class="empty-state">
+              <div class="empty-icon">&#10132;</div>
+              <p>No migration report yet</p>
+              <span>Scan your chains first, then generate a migration plan</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== ARK VAULT SECTION ==================== -->
+    <section class="section" id="section-vault">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">Ark Vault — Inheritance Protocol</h2>
+          <p class="section-desc">Protect your assets with a dead man's switch. If you go silent, your crypto reaches your family.</p>
+        </div>
+      </div>
+
+      <div class="vault-layout">
+        <!-- Progress Steps -->
+        <div class="vault-progress">
+          <div class="vault-step active" data-step="1">
+            <div class="step-num">1</div>
+            <div class="step-label">Beneficiaries</div>
+          </div>
+          <div class="step-line"></div>
+          <div class="vault-step" data-step="2">
+            <div class="step-num">2</div>
+            <div class="step-label">Trigger Settings</div>
+          </div>
+          <div class="step-line"></div>
+          <div class="vault-step" data-step="3">
+            <div class="step-num">3</div>
+            <div class="step-label">Preferences</div>
+          </div>
+          <div class="step-line"></div>
+          <div class="vault-step" data-step="4">
+            <div class="step-num">4</div>
+            <div class="step-label">Review & Deploy</div>
+          </div>
+        </div>
+
+        <!-- Step 1: Beneficiaries -->
+        <div class="vault-panel card active" id="vault-step-1">
+          <div class="card-header">
+            <span class="card-label">&#128101; Add Beneficiaries</span>
+          </div>
+          <div class="card-body">
+            <p class="form-desc">Who should receive your assets? Add wallet addresses and set percentages.</p>
+            <div id="beneficiaryList">
+              <div class="beneficiary-row" data-index="0">
+                <input type="text" class="input ben-name" placeholder="Name (e.g., Wife)" />
+                <input type="text" class="input ben-address" placeholder="0x... wallet address" />
+                <input type="number" class="input ben-percent" placeholder="%" min="1" max="100" value="100" />
+                <button class="btn-icon-sm remove-ben" onclick="removeBeneficiary(this)" title="Remove">&#10005;</button>
+              </div>
+            </div>
+            <button class="btn-outline-sm" onclick="addBeneficiary()">
+              + Add Beneficiary
+            </button>
+            <div class="percent-total">
+              Total: <span id="totalPercent">100</span>%
+              <span id="percentStatus" class="percent-ok">&#10003;</span>
+            </div>
+            <button class="btn-primary" onclick="vaultNextStep(2)">
+              Continue <span>&#10132;</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Step 2: Trigger Settings -->
+        <div class="vault-panel card" id="vault-step-2">
+          <div class="card-header">
+            <span class="card-label">&#9200; Dead Man's Switch</span>
+          </div>
+          <div class="card-body">
+            <p class="form-desc">Configure when the inheritance triggers. The vault monitors your wallet activity on Mantle.</p>
+            <div class="form-group">
+              <label>Inactivity Period</label>
+              <select id="inactivityPeriod" class="input">
+                <option value="30">30 days</option>
+                <option value="60">60 days</option>
+                <option value="90" selected>90 days</option>
+                <option value="180">180 days (6 months)</option>
+                <option value="365">365 days (1 year)</option>
+              </select>
+              <div class="input-hint">How long without wallet activity before the switch triggers</div>
+            </div>
+            <div class="form-group">
+              <label>Grace Period</label>
+              <select id="gracePeriod" class="input">
+                <option value="7">7 days</option>
+                <option value="14">14 days</option>
+                <option value="30" selected>30 days</option>
+                <option value="60">60 days</option>
+              </select>
+              <div class="input-hint">After trigger, how long you have to cancel (prove you're alive)</div>
+            </div>
+            <div class="form-group">
+              <label>Heartbeat Method</label>
+              <select id="heartbeatMethod" class="input">
+                <option value="transaction">Any Mantle Transaction</option>
+                <option value="heartbeat">Manual Heartbeat (call contract)</option>
+                <option value="sign">Sign a Message</option>
+              </select>
+              <div class="input-hint">How you prove you're still active</div>
+            </div>
+            <div class="vault-nav-btns">
+              <button class="btn-outline" onclick="vaultNextStep(1)">&#8592; Back</button>
+              <button class="btn-primary" onclick="vaultNextStep(3)">Continue <span>&#10132;</span></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 3: Preferences -->
+        <div class="vault-panel card" id="vault-step-3">
+          <div class="card-header">
+            <span class="card-label">&#9881; Execution Preferences</span>
+          </div>
+          <div class="card-body">
+            <p class="form-desc">What should the vault do before distributing assets to beneficiaries?</p>
+            <div class="toggle-group">
+              <label class="toggle-item">
+                <input type="checkbox" id="exitDefi" checked />
+                <span class="toggle-label">Exit all DeFi positions</span>
+                <span class="toggle-desc">Withdraw from lending, LP pools, staking before distribution</span>
+              </label>
+              <label class="toggle-item">
+                <input type="checkbox" id="convertStable" />
+                <span class="toggle-label">Convert to stablecoins</span>
+                <span class="toggle-desc">Swap all tokens to USDT/USDC before distributing</span>
+              </label>
+              <label class="toggle-item">
+                <input type="checkbox" id="revokeApprovals" checked />
+                <span class="toggle-label">Revoke all token approvals</span>
+                <span class="toggle-desc">Remove all contract permissions for security</span>
+              </label>
+              <label class="toggle-item">
+                <input type="checkbox" id="generateReport" checked />
+                <span class="toggle-label">Generate family report</span>
+                <span class="toggle-desc">Create a human-readable report for your beneficiaries</span>
+              </label>
+            </div>
+            <div class="vault-nav-btns">
+              <button class="btn-outline" onclick="vaultNextStep(2)">&#8592; Back</button>
+              <button class="btn-primary" onclick="vaultNextStep(4)">Review Plan <span>&#10132;</span></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 4: Review & Deploy -->
+        <div class="vault-panel card" id="vault-step-4">
+          <div class="card-header">
+            <span class="card-label">&#128196; Review & Deploy</span>
+          </div>
+          <div class="card-body" id="vaultReview">
+            <div class="empty-state">
+              <div class="empty-icon">&#9878;</div>
+              <p>Complete the previous steps to see your vault plan</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== AI CHAT SECTION ==================== -->
+    <section class="section" id="section-chat">
+      <div class="chat-container">
+        <div class="chat-header">
+          <div class="chat-header-info">
+            <div class="chat-avatar">&#9883;</div>
+            <div>
+              <h3>Ark AI Assistant</h3>
+              <span>Ask about migration, inheritance, or Mantle DeFi</span>
+            </div>
+          </div>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+          <div class="chat-welcome">
+            <div class="welcome-icon">
+              <svg width="48" height="48" viewBox="0 0 32 32" fill="none">
+                <rect width="32" height="32" rx="8" fill="url(#logoGrad2)"/>
+                <path d="M16 6L22 12L16 18L10 12L16 6Z" fill="white" opacity="0.9"/>
+                <path d="M16 14L22 20L16 26L10 20L16 14Z" fill="white" opacity="0.5"/>
+                <defs><linearGradient id="logoGrad2" x1="0" y1="0" x2="32" y2="32"><stop stop-color="#00d4aa"/><stop offset="1" stop-color="#7b61ff"/></linearGradient></defs>
+              </svg>
+            </div>
+            <h3>Welcome to Ark AI</h3>
+            <p>I can help you with migration strategies, inheritance planning, and everything Mantle.</p>
+            <div class="quick-prompts">
+              <button class="quick-prompt" onclick="sendQuickChat('What are the best DeFi yields on Mantle right now?')">Mantle DeFi yields</button>
+              <button class="quick-prompt" onclick="sendQuickChat('How do I bridge from Solana to Mantle?')">Bridge from Solana</button>
+              <button class="quick-prompt" onclick="sendQuickChat('Explain how the Ark Vault inheritance works')">How Ark Vault works</button>
+              <button class="quick-prompt" onclick="sendQuickChat('What makes Mantle better than other L2s?')">Why Mantle?</button>
+            </div>
+          </div>
+        </div>
+        <div class="chat-input-area">
+          <textarea id="chatInput" class="chat-input" placeholder="Ask Ark AI anything..." rows="1" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendChat()}"></textarea>
+          <button class="btn-chat" onclick="sendChat()">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13"/><path d="M22 2L15 22L11 13L2 9L22 2Z"/></svg>
+          </button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <span>Built on <strong>Mantle Network</strong> &mdash; Mantle Ark AI</span>
+    <div class="network-badge" id="networkBadge">
+      <span class="network-dot"></span>
+      <span id="networkName">Not Connected</span>
+    </div>
+  </footer>
+
+  <!-- Loading Overlay -->
+  <div class="loading-overlay hidden" id="loadingOverlay">
+    <div class="loading-content">
+      <div class="loading-spinner"></div>
+      <div id="loadingText">Loading...</div>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="/js/particles.js"></script>
+  <script src="/js/app.js"></script>
+  <script src="/js/wallet.js"></script>
+  <script src="/js/scanner.js"></script>
+  <script src="/js/migration.js"></script>
+  <script src="/js/inheritance.js"></script>
+  <script src="/js/ai.js"></script>
+</body>
+</html>
